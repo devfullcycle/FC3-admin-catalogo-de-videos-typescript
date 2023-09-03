@@ -8,6 +8,7 @@ import {
 import { Category } from "./category.entity";
 import { ClassValidatorFields } from "../../shared/domain/validators/class-validator-fields";
 
+//criar um testes que verifique os decorators
 export class CategoryRules {
   @MaxLength(255)
   @IsString()
