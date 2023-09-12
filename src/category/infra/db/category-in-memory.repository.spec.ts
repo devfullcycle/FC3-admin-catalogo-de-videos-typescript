@@ -6,7 +6,7 @@ describe("CategoryInMemoryRepository", () => {
 
   beforeEach(() => (repository = new CategoryInMemoryRepository()));
   it("should no filter items when filter object is null", async () => {
-    const items = [Category.create({ name: "test" })];
+    const items = [Category.fake().aCategory().build()];
     const filterSpy = jest.spyOn(items, "filter" as any);
 
     const itemsFiltered = await repository["applyFilter"](items, null);
@@ -16,9 +16,9 @@ describe("CategoryInMemoryRepository", () => {
 
   it("should filter items using filter parameter", async () => {
     const items = [
-      new Category({ name: "test" }),
-      new Category({ name: "TEST" }),
-      new Category({ name: "fake" }),
+      Category.fake().aCategory().withName("test").build(),
+      Category.fake().aCategory().withName("TEST").build(),
+      Category.fake().aCategory().withName("fake").build(),
     ];
     const filterSpy = jest.spyOn(items, "filter" as any);
 
@@ -31,15 +31,21 @@ describe("CategoryInMemoryRepository", () => {
     const created_at = new Date();
 
     const items = [
-      new Category({ name: "test", created_at }),
-      new Category({
-        name: "TEST",
-        created_at: new Date(created_at.getTime() + 100),
-      }),
-      new Category({
-        name: "fake",
-        created_at: new Date(created_at.getTime() + 200),
-      }),
+      Category.fake()
+        .aCategory()
+        .withName("test")
+        .withCreatedAt(created_at)
+        .build(),
+      Category.fake()
+        .aCategory()
+        .withName("TEST")
+        .withCreatedAt(new Date(created_at.getTime() + 100))
+        .build(),
+      Category.fake()
+        .aCategory()
+        .withName("fake")
+        .withCreatedAt(new Date(created_at.getTime() + 200))
+        .build(),
     ];
 
     const itemsSorted = await repository["applySort"](items, null, null);
@@ -48,9 +54,9 @@ describe("CategoryInMemoryRepository", () => {
 
   it("should sort by name", async () => {
     const items = [
-      Category.create({ name: "c" }),
-      Category.create({ name: "b" }),
-      Category.create({ name: "a" }),
+      Category.fake().aCategory().withName("c").build(),
+      Category.fake().aCategory().withName("b").build(),
+      Category.fake().aCategory().withName("a").build(),
     ];
 
     let itemsSorted = await repository["applySort"](items, "name", "asc");
