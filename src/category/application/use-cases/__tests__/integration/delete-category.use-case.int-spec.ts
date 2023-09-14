@@ -1,9 +1,9 @@
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { setupSequelize } from "../../../../shared/infra/testing/helpers";
-import { Category } from "../../../domain/category.entity";
-import { CategorySequelizeRepository } from "../../../infra/db/sequelize/category-sequelize.repository";
-import { CategoryModel } from "../../../infra/db/sequelize/category.model";
+import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
+import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
+import { Category } from "../../../../domain/category.entity";
+import { CategorySequelizeRepository } from "../../../../infra/db/sequelize/category-sequelize.repository";
+import { CategoryModel } from "../../../../infra/db/sequelize/category.model";
 import { DeleteCategoryUseCase } from "../../delete-category.use-case";
 
 describe("DeleteCategoryUseCase Integration Tests", () => {
