@@ -4,7 +4,7 @@ import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { Category } from '../../../../domain/category.entity';
 import { CategorySequelizeRepository } from '../../../../infra/db/sequelize/category-sequelize.repository';
 import { CategoryModel } from '../../../../infra/db/sequelize/category.model';
-import { UpdateCategoryUseCase } from '../../update-category.use-case';
+import { UpdateCategoryUseCase } from '../update-category.use-case';
 
 describe('UpdateCategoryUseCase Integration Tests', () => {
   let useCase: UpdateCategoryUseCase;
