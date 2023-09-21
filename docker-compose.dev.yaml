@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+  
   app:
     build: .
     command: ./.docker/start.sh
@@ -8,13 +9,13 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
-  
+
   db:
     image: mysql:8.0.30-debian
     environment:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root
-    tmpfs:
-      - /var/lib/mysql
+    volumes:
+      - ./.docker/dbdata:/var/lib/mysql:delegated
     security_opt:
       - seccomp:unconfined
