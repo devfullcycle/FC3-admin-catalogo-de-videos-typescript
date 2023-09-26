@@ -9,6 +9,7 @@ import {
   Inject,
   UsePipes,
   ValidationPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -20,6 +21,7 @@ import { ListCategoriesUseCase } from '../../core/category/application/use-cases
 import { CreateCategoryInput } from '../../core/category/application/use-cases/create-category/create-category.input';
 import { CategoryPresenter } from './categories.presenter';
 import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
+import { ValidateUpdateCategoryInput } from '../../core/category/application/use-cases/update-category/update-category.input';
 
 @Controller('categories')
 export class CategoriesController {
@@ -51,10 +53,16 @@ export class CategoriesController {
   findOne(@Param('id') id: string) {}
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
+  async update(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
-  ) {}
+  ) {
+    const output = await this.updateUseCase.execute({
+      ...updateCategoryDto,
+      id,
+    });
+    return CategoriesController.serialize(output);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {}
