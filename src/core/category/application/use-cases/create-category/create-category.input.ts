@@ -4,7 +4,7 @@ import {
   IsOptional,
   IsString,
   validateSync,
-} from "class-validator";
+} from 'class-validator';
 
 export type CreateCategoryInputConstructorProps = {
   name: string;
