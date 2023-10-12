@@ -1,4 +1,4 @@
-import { EntityValidationError } from '../../../../../shared/domain/validators/validation.error';
+import { LoadEntityError } from '../../../../../shared/domain/validators/validation.error';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
 import { Category, CategoryId } from '../../../../domain/category.aggregate';
 import { CategoryModelMapper } from '../category-model-mapper';
@@ -19,8 +19,8 @@ describe('CategoryModelMapper Integration Tests', () => {
         'The category is valid, but it needs throws a EntityValidationError',
       );
     } catch (e) {
-      expect(e).toBeInstanceOf(EntityValidationError);
-      expect((e as EntityValidationError).error).toMatchObject([
+      expect(e).toBeInstanceOf(LoadEntityError);
+      expect((e as LoadEntityError).error).toMatchObject([
         {
           name: ['name must be shorter than or equal to 255 characters'],
         },
