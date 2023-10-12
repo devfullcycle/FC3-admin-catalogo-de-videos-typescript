@@ -1,12 +1,11 @@
-import { Chance } from "chance";
-import { Category } from "./category.entity";
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
+import { Chance } from 'chance';
+import { Category, CategoryId } from './category.aggregate';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
 export class CategoryFakeBuilder<TBuild = any> {
   // auto generated in entity
-  private _category_id: PropOrFactory<Uuid> | undefined = undefined;
+  private _category_id: PropOrFactory<CategoryId> | undefined = undefined;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,7 +33,7 @@ export class CategoryFakeBuilder<TBuild = any> {
     this.chance = Chance();
   }
 
-  withUuid(valueOrFactory: PropOrFactory<Uuid>) {
+  withCategoryId(valueOrFactory: PropOrFactory<CategoryId>) {
     this._category_id = valueOrFactory;
     return this;
   }
@@ -91,38 +90,38 @@ export class CategoryFakeBuilder<TBuild = any> {
   }
 
   get category_id() {
-    return this.getValue("category_id");
+    return this.getValue('category_id');
   }
 
   get name() {
-    return this.getValue("name");
+    return this.getValue('name');
   }
 
   get description() {
-    return this.getValue("description");
+    return this.getValue('description');
   }
 
   get is_active() {
-    return this.getValue("is_active");
+    return this.getValue('is_active');
   }
 
   get created_at() {
-    return this.getValue("created_at");
+    return this.getValue('created_at');
   }
 
   private getValue(prop: any) {
-    const optional = ["category_id", "created_at"];
+    const optional = ['category_id', 'created_at'];
     const privateProp = `_${prop}` as keyof this;
     if (!this[privateProp] && optional.includes(prop)) {
       throw new Error(
-        `Property ${prop} not have a factory, use 'with' methods`
+        `Property ${prop} not have a factory, use 'with' methods`,
       );
     }
     return this.callFactory(this[privateProp], 0);
   }
 
   private callFactory(factoryOrValue: PropOrFactory<any>, index: number) {
-    return typeof factoryOrValue === "function"
+    return typeof factoryOrValue === 'function'
       ? factoryOrValue(index)
       : factoryOrValue;
   }

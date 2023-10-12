@@ -24,6 +24,6 @@ export function migrator(
 }
 
 //validação do schema (mysql que é banco de produção)
-  //- criar gerar o schema do banco via models
-  //- criar gerar o schema do banco via migrations
-  //- gero um dump do schema1 e schema2
+//- criar gerar o schema do banco via models
+//- criar gerar o schema do banco via migrations
+//- gero um dump do schema1 e schema2
