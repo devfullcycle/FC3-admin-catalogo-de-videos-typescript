@@ -1,40 +1,49 @@
+import { getConnectionToken } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Sequelize } from 'sequelize-typescript';
+import { CategoryOutputMapper } from '../../../core/category/application/use-cases/common/category-output';
+import { CreateCategoryUseCase } from '../../../core/category/application/use-cases/create-category/create-category.use-case';
+import { DeleteCategoryUseCase } from '../../../core/category/application/use-cases/delete-category/delete-category.use-case';
+import { GetCategoryUseCase } from '../../../core/category/application/use-cases/get-category/get-category.use-case';
+import { ListCategoriesUseCase } from '../../../core/category/application/use-cases/list-categories/list-categories.use-case';
+import { UpdateCategoryUseCase } from '../../../core/category/application/use-cases/update-category/update-category.use-case';
+import { Category } from '../../../core/category/domain/category.entity';
 import { ICategoryRepository } from '../../../core/category/domain/category.repository';
-import { CategoriesController } from '../categories.controller';
+import { Uuid } from '../../../core/shared/domain/value-objects/uuid.vo';
 import { ConfigModule } from '../../config-module/config.module';
 import { DatabaseModule } from '../../database-module/database.module';
+import { CategoriesController } from '../categories.controller';
 import { CategoriesModule } from '../categories.module';
+import {
+  CategoryCollectionPresenter,
+  CategoryPresenter,
+} from '../categories.presenter';
 import { CATEGORY_PROVIDERS } from '../categories.providers';
-import { CreateCategoryUseCase } from '../../../core/category/application/use-cases/create-category/create-category.use-case';
-import { UpdateCategoryUseCase } from '../../../core/category/application/use-cases/update-category/update-category.use-case';
-import { ListCategoriesUseCase } from '../../../core/category/application/use-cases/list-categories/list-categories.use-case';
-import { GetCategoryUseCase } from '../../../core/category/application/use-cases/get-category/get-category.use-case';
-import { DeleteCategoryUseCase } from '../../../core/category/application/use-cases/delete-category/delete-category.use-case';
 import {
   CreateCategoryFixture,
   ListCategoriesFixture,
   UpdateCategoryFixture,
 } from '../testing/category-fixture';
-import {
-  CategoryCollectionPresenter,
-  CategoryPresenter,
-} from '../categories.presenter';
-import { CategoryOutputMapper } from '../../../core/category/application/use-cases/common/category-output';
-import { Uuid } from '../../../core/shared/domain/value-objects/uuid.vo';
-import { Category } from '../../../core/category/domain/category.entity';
 
 describe('CategoriesController Integration Tests', () => {
   let controller: CategoriesController;
   let repository: ICategoryRepository;
+  let module: TestingModule;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [ConfigModule.forRoot(), DatabaseModule, CategoriesModule],
     }).compile();
     controller = module.get<CategoriesController>(CategoriesController);
     repository = module.get<ICategoryRepository>(
       CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
     );
+    const sequelize = module.get<Sequelize>(getConnectionToken());
+    await sequelize.sync({ force: true });
+  });
+
+  afterEach(async () => {
+    await module?.close();
   });
 
   it('should be defined', () => {
