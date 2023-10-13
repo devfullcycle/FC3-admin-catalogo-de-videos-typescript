@@ -7,6 +7,14 @@ export class Config {
   static db() {
     Config.readEnv();
 
+    if (Config.env.DB_VENDOR !== 'sqlite') {
+      return {
+        dialect: 'sqlite' as any,
+        host: ':memory:',
+        logging: false,
+      };
+    }
+
     return {
       dialect: 'sqlite' as any,
       host: Config.env.DB_HOST,
