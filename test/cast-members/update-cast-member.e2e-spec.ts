@@ -118,7 +118,7 @@ describe('CastMembersController (e2e)', () => {
           const id = res.body.data.id;
           const castMemberUpdated = await castMemberRepo.findById(new Uuid(id));
           const presenter = CastMembersController.serialize(
-            CastMemberOutputMapper.toOutput(castMemberUpdated),
+            CastMemberOutputMapper.toOutput(castMemberUpdated!),
           );
           const serialized = instanceToPlain(presenter);
           expect(res.body.data).toStrictEqual(serialized);

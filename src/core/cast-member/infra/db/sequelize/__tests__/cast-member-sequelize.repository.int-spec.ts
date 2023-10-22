@@ -30,7 +30,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     const castMemberCreated = await repository.findById(
       castMember.cast_member_id,
     );
-    expect(castMemberCreated.toJSON()).toStrictEqual(castMember.toJSON());
+    expect(castMemberCreated!.toJSON()).toStrictEqual(castMember.toJSON());
   });
 
   it('should finds a entity by id', async () => {
@@ -40,7 +40,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     const entity = CastMember.fake().anActor().build();
     await repository.insert(entity);
     entityFound = await repository.findById(entity.cast_member_id);
-    expect(entity.toJSON()).toStrictEqual(entityFound.toJSON());
+    expect(entity.toJSON()).toStrictEqual(entityFound!.toJSON());
   });
 
   it('should return all cast members', async () => {
@@ -66,7 +66,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     await repository.update(entity);
 
     const entityFound = await repository.findById(entity.cast_member_id);
-    expect(entity.toJSON()).toStrictEqual(entityFound.toJSON());
+    expect(entity.toJSON()).toStrictEqual(entityFound!.toJSON());
   });
 
   it('should throw error on delete when a entity not found', async () => {

@@ -20,8 +20,8 @@ describe('CastMemberSearchParams', () => {
       });
 
       expect(searchParams).toBeInstanceOf(CastMemberSearchParams);
-      expect(searchParams.filter.name).toBe('John Doe');
-      expect(searchParams.filter.type.type).toBe(CastMemberTypes.ACTOR);
+      expect(searchParams.filter!.name).toBe('John Doe');
+      expect(searchParams.filter!.type!.type).toBe(CastMemberTypes.ACTOR);
     });
 
     it('should throw an error if the provided type is invalid', () => {

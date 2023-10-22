@@ -25,7 +25,7 @@ export class CastMemberInMemoryRepository
 
   protected async applyFilter(
     items: CastMember[],
-    filter: CastMemberFilter,
+    filter: CastMemberFilter | null,
   ): Promise<CastMember[]> {
     if (!filter) {
       return items;

@@ -16,7 +16,7 @@ export class CastMemberValidator extends ClassValidatorFields {
   validate(
     notification: Notification,
     data: CastMember,
-    fields: string[],
+    fields?: string[],
   ): boolean {
     const newFields = fields?.length ? fields : ['name'];
     return super.validate(notification, new CastMemberRules(data), newFields);

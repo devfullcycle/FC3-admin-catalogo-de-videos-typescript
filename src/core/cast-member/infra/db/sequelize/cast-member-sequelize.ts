@@ -68,7 +68,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     await this.castMemberModel.bulkCreate(entities.map((e) => e.toJSON()));
   }
 
-  async findById(id: CastMemberId): Promise<CastMember> {
+  async findById(id: CastMemberId): Promise<CastMember | null> {
     const model = await this._get(id.id);
     return model ? CastMemberModelMapper.toEntity(model) : null;
   }
@@ -141,7 +141,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     }
   }
 
-  private async _get(id: string): Promise<CastMemberModel> {
+  private async _get(id: string): Promise<CastMemberModel | null> {
     return this.castMemberModel.findByPk(id);
   }
 
@@ -166,7 +166,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
         where,
       }),
       ...(props.sort && this.sortableFields.includes(props.sort)
-        ? { order: this.formatSort(props.sort, props.sort_dir) }
+        ? { order: this.formatSort(props.sort, props.sort_dir!) }
         : { order: [['created_at', 'DESC']] }),
       offset,
       limit,
@@ -180,7 +180,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
   }
 
   private formatSort(sort: string, sort_dir: SortDirection) {
-    const dialect = this.castMemberModel.sequelize.getDialect() as 'mysql';
+    const dialect = this.castMemberModel.sequelize!.getDialect() as 'mysql';
     if (this.orderBy[dialect] && this.orderBy[dialect][sort]) {
       return this.orderBy[dialect][sort](sort_dir);
     }

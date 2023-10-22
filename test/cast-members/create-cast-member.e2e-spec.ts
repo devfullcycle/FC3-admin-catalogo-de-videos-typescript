@@ -68,7 +68,7 @@ describe('CastMembersController (e2e)', () => {
             new CastMemberId(id),
           );
           const presenter = CastMembersController.serialize(
-            CastMemberOutputMapper.toOutput(castMemberCreated),
+            CastMemberOutputMapper.toOutput(castMemberCreated!),
           );
           const serialized = instanceToPlain(presenter);
           expect(res.body.data).toStrictEqual({

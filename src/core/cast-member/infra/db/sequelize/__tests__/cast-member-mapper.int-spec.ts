@@ -16,6 +16,7 @@ describe('CastMemberModelMapper Integration Tests', () => {
   setupSequelize({ models: [CastMemberModel] });
 
   it('should throws error when cast member is invalid', () => {
+    //@ts-expect-error - This is an invalid cast member
     const model = CastMemberModel.build({
       cast_member_id: '9366b7dc-2d71-4799-b91c-c64adb205104',
     });

@@ -25,10 +25,10 @@ describe('CreateCastMemberUseCase Integration Tests', () => {
     });
     let entity = await repository.findById(new CastMemberId(output.id));
     expect(output).toStrictEqual({
-      id: entity.cast_member_id.id,
+      id: entity!.cast_member_id.id,
       name: 'test',
       type: CastMemberTypes.ACTOR,
-      created_at: entity.created_at,
+      created_at: entity!.created_at,
     });
 
     output = await useCase.execute({
@@ -37,10 +37,10 @@ describe('CreateCastMemberUseCase Integration Tests', () => {
     });
     entity = await repository.findById(new CastMemberId(output.id));
     expect(output).toStrictEqual({
-      id: entity.cast_member_id.id,
+      id: entity!.cast_member_id.id,
       name: 'test',
       type: CastMemberTypes.DIRECTOR,
-      created_at: entity.created_at,
+      created_at: entity!.created_at,
     });
   });
 });
