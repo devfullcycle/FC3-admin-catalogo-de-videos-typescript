@@ -8,6 +8,7 @@ import { DeleteCategoryUseCase } from '../../core/category/application/use-cases
 import { CategorySequelizeRepository } from '../../core/category/infra/db/sequelize/category-sequelize.repository';
 import { CategoryModel } from '../../core/category/infra/db/sequelize/category.model';
 import { ICategoryRepository } from '../../core/category/domain/category.repository';
+import { CategoriesIdExistsInDatabaseValidator } from '../../core/category/application/validations/categories-ids-exists-in-database.validator';
 
 export const REPOSITORIES = {
   CATEGORY_REPOSITORY: {
@@ -65,7 +66,18 @@ export const USE_CASES = {
   },
 };
 
+export const VALIDATIONS = {
+  CATEGORIES_IDS_EXISTS_IN_DATABASE_VALIDATOR: {
+    provide: CategoriesIdExistsInDatabaseValidator,
+    useFactory: (categoryRepo: ICategoryRepository) => {
+      return new CategoriesIdExistsInDatabaseValidator(categoryRepo);
+    },
+    inject: [REPOSITORIES.CATEGORY_REPOSITORY.provide],
+  },
+};
+
 export const CATEGORY_PROVIDERS = {
   REPOSITORIES,
   USE_CASES,
+  VALIDATIONS,
 };

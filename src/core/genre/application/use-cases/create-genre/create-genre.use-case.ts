@@ -1,4 +1,4 @@
-import { CategoriesIdExistsInStorageValidator } from '../../../../category/application/validations/categories-ids-exists-in-storage.validator';
+import { CategoriesIdExistsInDatabaseValidator } from '../../../../category/application/validations/categories-ids-exists-in-database.validator';
 import { ICategoryRepository } from '../../../../category/domain/category.repository';
 import { IUseCase } from '../../../../shared/application/use-case.interface';
 import { IUnitOfWork } from '../../../../shared/domain/repository/unit-of-work.interface';
@@ -15,7 +15,7 @@ export class CreateGenreUseCase
     private uow: IUnitOfWork,
     private genreRepo: IGenreRepository,
     private categoryRepo: ICategoryRepository,
-    private categoriesIdExistsInStorage: CategoriesIdExistsInStorageValidator,
+    private categoriesIdExistsInStorage: CategoriesIdExistsInDatabaseValidator,
   ) {}
 
   async execute(input: CreateGenreInput): Promise<CreateGenreOutput> {

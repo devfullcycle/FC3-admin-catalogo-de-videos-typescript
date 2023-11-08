@@ -3,7 +3,7 @@ import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
 import { Category, CategoryId } from '../../domain/category.aggregate';
 import { ICategoryRepository } from '../../domain/category.repository';
 
-export class CategoriesIdExistsInStorageValidator {
+export class CategoriesIdExistsInDatabaseValidator {
   constructor(private categoryRepo: ICategoryRepository) {}
 
   async validate(
