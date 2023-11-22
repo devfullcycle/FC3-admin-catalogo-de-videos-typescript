@@ -8,6 +8,7 @@ import { Banner } from './banner.vo';
 import { Thumbnail } from './thumbnail.vo';
 import { Trailer } from './trailer.vo';
 import { VideoMedia } from './video-media.vo';
+import VideoValidatorFactory from './video.validator';
 
 export type VideoConstructorProps = {
   video_id?: VideoId;
@@ -105,14 +106,14 @@ export class Video extends AggregateRoot {
       cast_members_id: new Map(props.cast_members_id.map((id) => [id.id, id])),
       is_published: false,
     });
-    video.validate;
+    video.validate(['title']);
 
     return video;
   }
 
   changeTitle(title: string): void {
     this.title = title;
-    this.validate;
+    this.validate(['title']);
   }
 
   changeDescription(description: string): void {
@@ -185,10 +186,10 @@ export class Video extends AggregateRoot {
     this.cast_members_id = new Map(castMembersId.map((id) => [id.id, id]));
   }
 
-  //   validate(fields?: string[]) {
-  //     const validator = VideoValidatorFactory.create();
-  //     return validator.validate(this.notification, this, fields);
-  //   }
+  validate(fields?: string[]) {
+    const validator = VideoValidatorFactory.create();
+    return validator.validate(this.notification, this, fields);
+  }
 
   //   static fake() {
   //     return VideoFakeBuilder;
