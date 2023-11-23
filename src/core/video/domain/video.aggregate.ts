@@ -121,7 +121,6 @@ export class Video extends AggregateRoot {
       is_published: false,
     });
     video.validate(['title']);
-    video.tryMarkAsPublished();
     video.applyEvent(
       new VideoCreatedEvent({
         video_id: video.video_id,
