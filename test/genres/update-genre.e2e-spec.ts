@@ -138,7 +138,7 @@ describe('GenresController (e2e)', () => {
           const id = res.body.data.id;
           const genreUpdated = await genreRepo.findById(new GenreId(id));
           const presenter = GenresController.serialize(
-            GenreOutputMapper.toOutput(genreUpdated, relations.categories),
+            GenreOutputMapper.toOutput(genreUpdated!, relations.categories),
           );
           const serialized = instanceToPlain(presenter);
           expect(res.body.data).toStrictEqual({
