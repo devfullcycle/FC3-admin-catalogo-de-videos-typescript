@@ -21,7 +21,7 @@ export abstract class AudioVideoMedia extends ValueObject {
   }: {
     name: string;
     raw_location: string;
-    encoded_location?: string;
+    encoded_location?: string | null;
     status: AudioVideoMediaStatus;
   }) {
     super();
