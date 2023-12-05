@@ -19,7 +19,7 @@ describe('Banner Unit Tests', () => {
     expect(error).toBeNull();
     expect(banner).toBeInstanceOf(Banner);
     expect(banner.name).toMatch(/\.png$/);
-    expect(banner.location).toBe(`videos/${videoId.id}/imagens`);
+    expect(banner.location).toBe(`videos/${videoId.id}/images`);
   });
 
   it('should throw an error if the file size is too large', () => {
