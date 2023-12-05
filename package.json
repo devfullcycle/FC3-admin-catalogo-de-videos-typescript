@@ -23,6 +23,7 @@
     "test:e2e:watch": "jest --config ./test/jest-e2e.config.ts --watch"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.7.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
