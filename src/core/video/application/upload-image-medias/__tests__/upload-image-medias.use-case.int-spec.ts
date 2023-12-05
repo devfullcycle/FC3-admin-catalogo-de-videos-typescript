@@ -11,7 +11,7 @@ import { GenreModel } from '../../../../genre/infra/db/sequelize/genre-model';
 import { GenreSequelizeRepository } from '../../../../genre/infra/db/sequelize/genre-sequelize.repository';
 import { IStorage } from '../../../../shared/application/storage.interface';
 import { UnitOfWorkSequelize } from '../../../../shared/infra/db/sequelize/unit-of-work-sequelize';
-import { InMemoryStorage } from '../../../../shared/infra/storage/in-memory.storage';
+//import { InMemoryStorage } from '../../../../shared/infra/storage/in-memory.storage';
 import { IVideoRepository } from '../../../domain/video.repository';
 import { setupSequelizeForVideo } from '../../../infra/db/sequelize/testing/helpers';
 import { VideoSequelizeRepository } from '../../../infra/db/sequelize/video-sequelize.repository';
@@ -23,7 +23,9 @@ import { Genre } from '../../../../genre/domain/genre.aggregate';
 import { CastMember } from '../../../../cast-member/domain/cast-member.aggregate';
 import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
 import { EntityValidationError } from '../../../../shared/domain/validators/validation.error';
-
+import { Storage as GoogleCloudStorageSdk } from '@google-cloud/storage';
+import { Config } from '../../../../shared/infra/config';
+import { GoogleCloudStorage } from '../../../../shared/infra/storage/google-cloud.storage';
 describe('UploadImageMediasUseCase Integration Tests', () => {
   let uploadImageMediasUseCase: UploadImageMediasUseCase;
   let videoRepo: IVideoRepository;
@@ -40,7 +42,11 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
     genreRepo = new GenreSequelizeRepository(GenreModel, uow);
     castMemberRepo = new CastMemberSequelizeRepository(CastMemberModel);
     videoRepo = new VideoSequelizeRepository(VideoModel, uow);
-    storageService = new InMemoryStorage();
+    //storageService = new InMemoryStorage();
+    const storageSdk = new GoogleCloudStorageSdk({
+      credentials: Config.googleCredentials(),
+    });
+    storageService = new GoogleCloudStorage(storageSdk, Config.bucketName());
 
     uploadImageMediasUseCase = new UploadImageMediasUseCase(
       uow,
@@ -107,7 +113,7 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
         },
       ]);
     }
-  });
+  }, 10000);
 
   it('should upload banner image', async () => {
     const storeSpy = jest.spyOn(storageService, 'store');
@@ -151,5 +157,5 @@ describe('UploadImageMediasUseCase Integration Tests', () => {
       id: videoUpdated!.banner!.url,
       mime_type: 'image/jpeg',
     });
-  });
+  }, 10000);
 });
