@@ -9,8 +9,9 @@ export class DomainEventMediator {
   }
 
   async publish(aggregateRoot: AggregateRoot) {
-    for (const event of aggregateRoot.events) {
+    for (const event of aggregateRoot.getUncommittedEvents()) {
       const eventClassName = event.constructor.name;
+      aggregateRoot.markEventAsDispatched(event);
       await this.eventEmitter.emitAsync(eventClassName, event);
     }
   }
