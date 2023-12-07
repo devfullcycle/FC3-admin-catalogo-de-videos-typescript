@@ -15,7 +15,7 @@ import { VideosModule } from './nest-modules/videos-module/videos.module';
     CategoriesModule,
     CastMembersModule,
     GenresModule,
-    VideosModule,
+    //VideosModule,
   ],
 })
 export class AppModule {}
