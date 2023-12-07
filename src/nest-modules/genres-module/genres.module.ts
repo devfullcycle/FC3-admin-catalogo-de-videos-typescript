@@ -17,6 +17,7 @@ import {
   providers: [
     ...Object.values(GENRES_PROVIDERS.REPOSITORIES),
     ...Object.values(GENRES_PROVIDERS.USE_CASES),
+    ...Object.values(GENRES_PROVIDERS.VALIDATIONS),
   ],
   exports: [GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide],
 })
