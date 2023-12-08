@@ -79,3 +79,7 @@ Content-Type: application/json
 ###
 
 @videoId = {{createVideo.response.body.data.id}}
+
+###
+
+GET http://localhost:3000/videos/{{videoId}}
