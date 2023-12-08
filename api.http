@@ -1,6 +1,7 @@
 ## valid uuid = 8f4b7b9c-3f7a-4b6c-8b0c-1c9c5b8b9b6a
 
-### Create Category
+### 
+# @name createCategory
 POST http://localhost:3000/categories
 Content-Type: application/json
 
@@ -10,7 +11,71 @@ Content-Type: application/json
 }
 
 ###
+
+@categoryId = {{createCategory.response.body.data.id}}
+
+###
 GET http://localhost:3000/categories
 
 ###
 GET http://localhost:3000/categories/8f4b7b9c-3f7a-4b6c-8b0c-1c9c5b8b9b6a
+
+
+### 
+# @name createGenre
+POST http://localhost:3000/genres
+Content-Type: application/json
+
+{
+    "name": "Genre 1",
+    "categories_id": [
+        "{{categoryId}}"
+    ]
+}
+
+###
+
+@genreId = {{createGenre.response.body.data.id}}
+
+###
+
+# @name createCastMember
+POST http://localhost:3000/cast-members
+Content-Type: application/json
+
+{
+    "name": "Cast Member 1",
+    "type": 1
+}
+
+###
+
+@castMemberId = {{createCastMember.response.body.data.id}}
+
+
+###
+# @name createVideo
+POST http://localhost:3000/videos
+Content-Type: application/json
+
+{
+    "title": "Video 1",
+    "description": "Description 1",
+    "year_launched": 2020,
+    "is_opened": false,
+    "rating": "L",
+    "duration": 90,
+    "categories_id": [
+        "{{categoryId}}"
+    ],
+    "genres_id": [
+        "{{genreId}}"
+    ],
+    "cast_members_id": [
+        "{{castMemberId}}"
+    ]
+}
+
+###
+
+@videoId = {{createVideo.response.body.data.id}}
