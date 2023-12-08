@@ -83,3 +83,29 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/videos/{{videoId}}
+
+
+###
+# @name updateVideo
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: application/json
+
+{
+    "title": "Video 1aaaa",
+    "description": "Description 1aaaa",
+    "year_launched": 2021,
+    "is_opened": false,
+    "rating": "L",
+    "duration": 90,
+    "categories_id": [
+        "{{categoryId}}"
+    ],
+    "genres_id": [
+        "{{genreId}}"
+    ],
+    "cast_members_id": [
+        "{{castMemberId}}"
+    ]
+}
+
+###
