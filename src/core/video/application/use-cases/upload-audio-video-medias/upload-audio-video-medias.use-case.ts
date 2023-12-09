@@ -1,12 +1,12 @@
-import { ApplicationService } from '../../../shared/application/application.service';
-import { IStorage } from '../../../shared/application/storage.interface';
-import { IUseCase } from '../../../shared/application/use-case.interface';
-import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { EntityValidationError } from '../../../shared/domain/validators/validation.error';
-import { Trailer } from '../../domain/trailer.vo';
-import { VideoMedia } from '../../domain/video-media.vo';
-import { Video, VideoId } from '../../domain/video.aggregate';
-import { IVideoRepository } from '../../domain/video.repository';
+import { ApplicationService } from '../../../../shared/application/application.service';
+import { IStorage } from '../../../../shared/application/storage.interface';
+import { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { EntityValidationError } from '../../../../shared/domain/validators/validation.error';
+import { Trailer } from '../../../domain/trailer.vo';
+import { VideoMedia } from '../../../domain/video-media.vo';
+import { Video, VideoId } from '../../../domain/video.aggregate';
+import { IVideoRepository } from '../../../domain/video.repository';
 import { UploadAudioVideoMediaInput } from './upload-audio-video-media.input';
 
 export class UploadAudioVideoMediasUseCase

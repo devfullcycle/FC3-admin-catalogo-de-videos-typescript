@@ -32,6 +32,7 @@ import { CastMembersModule } from '../cast-members-module/cast-members.module';
   providers: [
     ...Object.values(VIDEOS_PROVIDERS.REPOSITORIES),
     ...Object.values(VIDEOS_PROVIDERS.USE_CASES),
+    ...Object.values(VIDEOS_PROVIDERS.HANDLERS),
   ],
   //exports: [VIDEOS_PROVIDERS.REPOSITORIES.VIDEO_REPOSITORY.provide],
 })

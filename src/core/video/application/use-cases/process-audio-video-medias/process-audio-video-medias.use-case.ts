@@ -1,9 +1,9 @@
-import { IUseCase } from '../../../shared/application/use-case.interface';
-import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IUnitOfWork } from '../../../shared/domain/repository/unit-of-work.interface';
-import { AudioVideoMediaStatus } from '../../../shared/domain/value-objects/audio-video-media.vo';
-import { Video, VideoId } from '../../domain/video.aggregate';
-import { IVideoRepository } from '../../domain/video.repository';
+import { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { IUnitOfWork } from '../../../../shared/domain/repository/unit-of-work.interface';
+import { AudioVideoMediaStatus } from '../../../../shared/domain/value-objects/audio-video-media.vo';
+import { Video, VideoId } from '../../../domain/video.aggregate';
+import { IVideoRepository } from '../../../domain/video.repository';
 import { ProcessAudioVideoMediasInput } from './process-audio-video-medias.input';
 
 export class ProcessAudioVideoMediasUseCase

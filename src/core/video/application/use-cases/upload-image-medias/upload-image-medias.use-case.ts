@@ -1,13 +1,13 @@
-import { IStorage } from '../../../shared/application/storage.interface';
-import { IUseCase } from '../../../shared/application/use-case.interface';
-import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { IUnitOfWork } from '../../../shared/domain/repository/unit-of-work.interface';
-import { EntityValidationError } from '../../../shared/domain/validators/validation.error';
-import { Banner } from '../../domain/banner.vo';
-import { ThumbnailHalf } from '../../domain/thumbnail-half.vo';
-import { Thumbnail } from '../../domain/thumbnail.vo';
-import { Video, VideoId } from '../../domain/video.aggregate';
-import { IVideoRepository } from '../../domain/video.repository';
+import { IStorage } from '../../../../shared/application/storage.interface';
+import { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { IUnitOfWork } from '../../../../shared/domain/repository/unit-of-work.interface';
+import { EntityValidationError } from '../../../../shared/domain/validators/validation.error';
+import { Banner } from '../../../domain/banner.vo';
+import { ThumbnailHalf } from '../../../domain/thumbnail-half.vo';
+import { Thumbnail } from '../../../domain/thumbnail.vo';
+import { Video, VideoId } from '../../../domain/video.aggregate';
+import { IVideoRepository } from '../../../domain/video.repository';
 import { UploadImageMediasInput } from './upload-image-medias.input';
 
 export class UploadImageMediasUseCase

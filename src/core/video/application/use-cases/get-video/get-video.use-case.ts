@@ -1,10 +1,10 @@
-import { ICastMemberRepository } from '../../../cast-member/domain/cast-member.repository';
-import { ICategoryRepository } from '../../../category/domain/category.repository';
-import { IGenreRepository } from '../../../genre/domain/genre.repository';
-import { IUseCase } from '../../../shared/application/use-case.interface';
-import { NotFoundError } from '../../../shared/domain/errors/not-found.error';
-import { Video, VideoId } from '../../domain/video.aggregate';
-import { IVideoRepository } from '../../domain/video.repository';
+import { ICastMemberRepository } from '../../../../cast-member/domain/cast-member.repository';
+import { ICategoryRepository } from '../../../../category/domain/category.repository';
+import { IGenreRepository } from '../../../../genre/domain/genre.repository';
+import { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { Video, VideoId } from '../../../domain/video.aggregate';
+import { IVideoRepository } from '../../../domain/video.repository';
 import { VideoOutput, VideoOutputMapper } from '../common/video-output';
 
 export class GetVideoUseCase

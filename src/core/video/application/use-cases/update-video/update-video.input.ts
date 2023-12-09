@@ -9,7 +9,7 @@ import {
   Min,
   validateSync,
 } from 'class-validator';
-import { RatingValues } from '../../domain/rating.vo';
+import { RatingValues } from '../../../domain/rating.vo';
 
 export type UpdateVideoInputConstructorProps = {
   id: string;

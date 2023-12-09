@@ -1,7 +1,7 @@
-import { CastMember } from '../../../cast-member/domain/cast-member.aggregate';
-import { Category } from '../../../category/domain/category.aggregate';
-import { Genre } from '../../../genre/domain/genre.aggregate';
-import { Video } from '../../domain/video.aggregate';
+import { CastMember } from '../../../../cast-member/domain/cast-member.aggregate';
+import { Category } from '../../../../category/domain/category.aggregate';
+import { Genre } from '../../../../genre/domain/genre.aggregate';
+import { Video } from '../../../domain/video.aggregate';
 import { VideoOutputMapper } from './video-output';
 
 describe('VideoOutputMapper Unit Tests', () => {

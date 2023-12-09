@@ -5,7 +5,7 @@ import {
   IsIn,
   validateSync,
 } from 'class-validator';
-import { AudioVideoMediaStatus } from '../../../shared/domain/value-objects/audio-video-media.vo';
+import { AudioVideoMediaStatus } from '../../../../shared/domain/value-objects/audio-video-media.vo';
 
 export type ProcessAudioVideoMediasInputConstructorProps = {
   video_id: string;

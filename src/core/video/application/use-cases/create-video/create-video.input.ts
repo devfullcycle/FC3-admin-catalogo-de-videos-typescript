@@ -8,7 +8,7 @@ import {
   IsInt,
   validateSync,
 } from 'class-validator';
-import { RatingValues } from '../../domain/rating.vo';
+import { RatingValues } from '../../../domain/rating.vo';
 
 export type CreateVideoInputConstructorProps = {
   title: string;
