@@ -22,3 +22,11 @@ services:
       - /var/lib/mysql
     security_opt:
       - seccomp:unconfined
+  
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
