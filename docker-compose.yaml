@@ -8,6 +8,8 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
   
   db:
     image: mysql:8.0.30-debian
