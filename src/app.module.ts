@@ -7,6 +7,7 @@ import { CastMembersModule } from './nest-modules/cast-members-module/cast-membe
 import { GenresModule } from './nest-modules/genres-module/genres.module';
 import { VideosModule } from './nest-modules/videos-module/videos.module';
 import { EventModule } from './nest-modules/event-module/event.module';
+import { UseCaseModule } from './nest-modules/use-case-module/use-case.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EventModule } from './nest-modules/event-module/event.module';
     DatabaseModule,
     SharedModule,
     EventModule,
+    UseCaseModule,
     CategoriesModule,
     CastMembersModule,
     GenresModule,
