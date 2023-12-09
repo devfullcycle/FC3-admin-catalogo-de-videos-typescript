@@ -126,3 +126,6 @@ Content-Type: video/mp4
 ###
 
 GET http://localhost:3000/fake-event
+
+###
+GET http://localhost:3000/rabbitmq-fake
