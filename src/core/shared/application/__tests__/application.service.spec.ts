@@ -40,10 +40,15 @@ describe('ApplicationService Unit Tests', () => {
       const aggregateRoot = new StubAggregateRoot();
       uow.addAggregateRoot(aggregateRoot);
       const publishSpy = jest.spyOn(domainEventMediator, 'publish');
+      const publishIntegrationEventsSpy = jest.spyOn(
+        domainEventMediator,
+        'publishIntegrationEvents',
+      );
       const commitSpy = jest.spyOn(uow, 'commit');
       await applicationService.finish();
       expect(publishSpy).toBeCalledWith(aggregateRoot);
       expect(commitSpy).toBeCalled();
+      expect(publishIntegrationEventsSpy).toBeCalledWith(aggregateRoot);
     });
   });
 
