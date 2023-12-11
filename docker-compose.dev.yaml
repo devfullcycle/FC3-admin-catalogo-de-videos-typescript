@@ -23,7 +23,7 @@ services:
       - seccomp:unconfined
   
   rabbitmq:
-    image: rabbitmq:3.8-management-alpine
+    build: ./.docker/rabbitmq
     ports:
       - 15672:15672
     environment:
