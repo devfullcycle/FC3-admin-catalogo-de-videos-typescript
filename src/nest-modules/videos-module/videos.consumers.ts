@@ -21,6 +21,11 @@ export class VideosConsumers {
     routingKey: 'videos.convert',
     queue: 'micro-videos/admin',
     allowNonJsonMessages: true,
+    queueOptions: {
+      deadLetterExchange: 'dlx.exchange',
+      deadLetterRoutingKey: 'videos.convert',
+      //messageTtl: 5000 - tempo de vida da mensagem na fila para ser republicada
+    },
   })
   async onProcessVideo(msg: {
     video: {
