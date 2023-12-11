@@ -37,7 +37,7 @@ export class VideosConsumers {
       encoded_location: msg.video?.encoded_video_folder,
       status: msg.video?.status as AudioVideoMediaStatus,
     });
-    //try {
+
     await new ValidationPipe({
       errorHttpStatusCode: 422,
     }).transform(input, {
@@ -48,8 +48,5 @@ export class VideosConsumers {
       ProcessAudioVideoMediasUseCase,
     );
     await useCase.execute(input);
-    // } catch (e) {
-    //   console.error(e);
-    // }
   }
 }
