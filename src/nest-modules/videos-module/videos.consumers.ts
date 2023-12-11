@@ -1,5 +1,7 @@
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
-import { Injectable } from '@nestjs/common';
+import { Injectable, ValidationPipe } from '@nestjs/common';
+import { ProcessAudioVideoMediasInput } from '../../core/video/application/use-cases/process-audio-video-medias/process-audio-video-medias.input';
+import { AudioVideoMediaStatus } from '../../core/shared/domain/value-objects/audio-video-media.vo';
 
 @Injectable()
 export class VideosConsumers {
@@ -9,13 +11,30 @@ export class VideosConsumers {
     queue: 'micro-videos/admin',
     allowNonJsonMessages: true,
   })
-  onProcessVideo(msg: {
+  async onProcessVideo(msg: {
     video: {
-      resource_id: string;
+      resource_id: string; //video_id.field
       encoded_video_folder: string;
       status: 'COMPLETED' | 'FAILED';
     };
   }) {
-    console.log(msg);
+    const resource_id = `${msg.video?.resource_id}`;
+    const [video_id, field] = resource_id.split('.');
+    const input = new ProcessAudioVideoMediasInput({
+      video_id,
+      field: field as 'trailer' | 'video',
+      encoded_location: msg.video?.encoded_video_folder,
+      status: msg.video?.status as AudioVideoMediaStatus,
+    });
+    try {
+      await new ValidationPipe({
+        errorHttpStatusCode: 422,
+      }).transform(input, {
+        metatype: ProcessAudioVideoMediasInput,
+        type: 'body',
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
