@@ -4,12 +4,12 @@ NACK - Not Acknowledged (reenfileirar ou descarta-la)
 UNACKED - Mensagem não foi confirmada
 
 
-```
+```json
 {
  "video": {
-    "resource_id": "c9d40695-48c3-4e22-b490-27de9499cf35.video",
-    "status": "COMPLETED",
-    "encoded_video_folder": "videos/c9d40695-48c3-4e22-b490-27de9499cf35/mpeg-dash"
+    "resource_id": "a62d89a0-7c9e-4748-ba9e-dcbbdda91fb0.video",
+    "status": "completed",
+    "encoded_video_folder": "videos/a62d89a0-7c9e-4748-ba9e-dcbbdda91fb0/mpeg-dash"
   }
 }
 ```

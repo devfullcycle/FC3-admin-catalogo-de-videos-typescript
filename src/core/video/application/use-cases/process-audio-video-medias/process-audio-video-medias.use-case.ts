@@ -39,7 +39,7 @@ export class ProcessAudioVideoMediasUseCase
         throw new Error('Video not found');
       }
 
-      video.trailer =
+      video.video =
         input.status === AudioVideoMediaStatus.COMPLETED
           ? video.video.complete(input.encoded_location)
           : video.video.fail();
