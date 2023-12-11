@@ -2,9 +2,13 @@ import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Injectable, ValidationPipe } from '@nestjs/common';
 import { ProcessAudioVideoMediasInput } from '../../core/video/application/use-cases/process-audio-video-medias/process-audio-video-medias.input';
 import { AudioVideoMediaStatus } from '../../core/shared/domain/value-objects/audio-video-media.vo';
+import { ProcessAudioVideoMediasUseCase } from '../../core/video/application/use-cases/process-audio-video-medias/process-audio-video-medias.use-case';
+import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
 export class VideosConsumers {
+  constructor(private moduleRef: ModuleRef) {}
+
   @RabbitSubscribe({
     exchange: 'amq.direct',
     routingKey: 'videos.convert',
@@ -33,6 +37,10 @@ export class VideosConsumers {
         metatype: ProcessAudioVideoMediasInput,
         type: 'body',
       });
+      const useCase = await this.moduleRef.resolve(
+        ProcessAudioVideoMediasUseCase,
+      );
+      await useCase.execute(input);
     } catch (e) {
       console.error(e);
     }
