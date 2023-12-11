@@ -21,6 +21,6 @@ export function applyGlobalConfig(app: INestApplication) {
   );
   app.useGlobalFilters(
     new EntityValidationErrorFilter(),
-    new NotFoundErrorFilter(),
+    new NotFoundErrorFilter()
   );
 }
