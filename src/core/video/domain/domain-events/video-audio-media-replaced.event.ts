@@ -28,25 +28,25 @@ export class VideoAudioMediaReplaced implements IDomainEvent {
     this.event_version = 1;
   }
 
-  //@ts-expect-error - this is not a formal event
   getIntegrationEvent(): VideoAudioMediaUploadedIntegrationEvent {
     return new VideoAudioMediaUploadedIntegrationEvent(this);
   }
 }
 
-//@ts-expect-error - this is not a formal event
 export class VideoAudioMediaUploadedIntegrationEvent
   implements IIntegrationEvent
 {
-  resource_id: string;
-  file_path: string;
-  // event_name: string;
-  // payload: any;
-  // event_version: number;
-  // occurred_on: Date;
+  //resource_id: string;
+  //file_path: string;
+
+  declare event_name: string;
+  declare payload: any;
+  declare event_version: number;
+  declare occurred_on: Date;
+
   constructor(event: VideoAudioMediaReplaced) {
-    this.resource_id = `${event.aggregate_id.id}.${event.media_type}`;
-    this.file_path = event.media.raw_url;
+    this['resource_id'] = `${event.aggregate_id.id}.${event.media_type}`;
+    this['file_path'] = event.media.raw_url;
     // this.event_version = event.event_version;
     // this.occurred_on = event.occurred_on;
     // this.payload = {
