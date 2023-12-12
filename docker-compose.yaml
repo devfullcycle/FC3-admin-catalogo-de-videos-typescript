@@ -10,6 +10,8 @@ services:
       - .:/home/node/app
       - '/etc/timezone:/etc/timezone:ro'
       - '/etc/localtime:/etc/localtime:ro'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   
   db:
     image: mysql:8.0.30-debian
