@@ -52,6 +52,7 @@ export class RabbitmqModule {
                 name: 'dlx.queue',
                 exchange: 'dlx.exchange',
                 routingKey: '#', //aceito qualquer routing key
+                createQueueIfNotExists: false,
               },
             ],
           }),
