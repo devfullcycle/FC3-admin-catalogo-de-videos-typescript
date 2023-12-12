@@ -22,7 +22,6 @@ export class RabbitmqConsumeErrorFilter implements ExceptionFilter {
   constructor(private amqpConnection: AmqpConnection) {}
 
   async catch(exception: Error, host: ArgumentsHost) {
-    console.log('RabbitMQConsumeErrorFilter - Exception: ', exception);
     if (host.getType<'rmq'>() !== 'rmq') {
       return;
     }
@@ -39,11 +38,11 @@ export class RabbitmqConsumeErrorFilter implements ExceptionFilter {
     const ctx = host.switchToRpc();
     const message: ConsumeMessage = ctx.getContext();
 
-    console.log('RabbitMQConsumeErrorFilter - Exception: ', exception);
-    console.log(
-      'RabbitMQConsumeErrorFilter - Retry Count',
-      message.properties.headers[RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER],
-    );
+    // console.log('RabbitMQConsumeErrorFilter - Exception: ', exception);
+    // console.log(
+    //   'RabbitMQConsumeErrorFilter - Retry Count',
+    //   message.properties.headers[RabbitmqConsumeErrorFilter.RETRY_COUNT_HEADER],
+    // );
 
     if (this.shouldRetry(message.properties.headers)) {
       await this.retry(message);
