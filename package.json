@@ -20,7 +20,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.config.ts",
-    "test:e2e:watch": "jest --config ./test/jest-e2e.config.ts --watch"
+    "test:e2e:watch": "jest --config ./test/jest-e2e.config.ts --watch",
+    "rabbitmq:consumers:dev": "npm run start:dev -- --entryFile cmd/rabbitmq",
+    "rabbitmq:consumers:prod": "node dist/cmd/rabbitmq"
   },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^4.1.0",

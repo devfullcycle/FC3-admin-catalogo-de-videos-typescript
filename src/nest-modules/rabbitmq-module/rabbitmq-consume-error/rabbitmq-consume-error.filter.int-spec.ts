@@ -87,7 +87,10 @@ describe('RabbitmqConsumeErrorFilter Integration Tests', () => {
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot(), RabbitmqModule.forRoot()],
+      imports: [
+        ConfigModule.forRoot(),
+        RabbitmqModule.forRoot({ enableConsumers: true }),
+      ],
       providers: [RabbitmqConsumeErrorFilter, StubConsumer, PurgeRetryQueue],
     }).compile();
 
