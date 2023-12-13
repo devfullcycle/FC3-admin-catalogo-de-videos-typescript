@@ -12,6 +12,8 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    labels:
+      filebeat_collector: true
   
   db:
     image: mysql:8.0.30-debian

@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+    restart: on-failure
+    # mkdir .docker/elasticdata
+    # volumes:
+    #   - ./.docker/elasticdata:/usr/share/elasticsearch/data
+    environment:
+      - 'discovery.type=single-node'
+    ports:
+      - 9200:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.9
+    restart: on-failure
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.9
+    restart: on-failure
+    volumes:
+      - ./.docker/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+    ports:
+      - '5044:5044'
+    environment:
+      LS_JAVA_OPTS: '-Xmx256m -Xms256m'
+
+  filebeat:
+    build: 
+      context: ./.docker/elk
+      dockerfile: Dockerfile.filebeat
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro # Docker logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Additional information about containers
+      - ./.docker/filebeatdata:/usr/share/filebeat/data:rw # Persistence data
+    user: root # Allow access to log files and docker.sock
+    restart: on-failure
