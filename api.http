@@ -16,6 +16,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/categories
+Authorization: Bearer {{jwtToken}}
 
 ###
 GET http://localhost:3000/categories/8f4b7b9c-3f7a-4b6c-8b0c-1c9c5b8b9b6a
@@ -157,6 +158,10 @@ Content-Type: application/json
 }
 
 ###
+
+@jwtToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzAyNDY3OTc5LCJleHAiOjE3MDI1NTQzNzl9.U8sXoDWnVFOUcGJzpBqAn7F9xH3INdm1H9KYcBXckpAFc4O65eQtPo4AnS11VYFsA8LL7cuc0cNY6MUlzqm5u17JhhzZDsn79bbk9fJoxk0UFRmGl_bxjQTSABUSHpHBYC19UH8KRNZloc4N7wJgYv9xzMDNiyFDS5VyXtoB008B86zeA2N10OjGFqxjDo6FRpTvVGhpvDVXrGDzfAu_RoL_G0J-WkpPQ8_CK0tYXNjWMUYg9SswhGg2QJyTuHEofxx3amf-PVC4R_V_ufhc_WyXzcZvqEF4M2w7MyPC-n7hagBGa1BEhtmQJtJCW4JfSaSs47_CD8f2WmYC2Y4ZEA
+
+###
 GET http://localhost:3000/auth
 Content-Type: application/json
-Authorization: Bearer xxxxx
+Authorization: Bearer {{jwtToken}}
