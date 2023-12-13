@@ -53,7 +53,7 @@ describe('RabbitMQMessageBroker Integration tests', () => {
       await service.publishEvent(event);
       const msg: ConsumeMessage = await new Promise((resolve) => {
         connection.channel.consume('test-queue', (msg) => {
-          resolve(msg);
+          resolve(msg as any);
         });
       });
       const msgObj = JSON.parse(msg.content.toString());

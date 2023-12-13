@@ -25,6 +25,7 @@ import { Category } from '../../../core/category/domain/category.aggregate';
 import { GENRES_PROVIDERS } from '../genres.providers';
 import { CATEGORY_PROVIDERS } from '../../categories-module/categories.providers';
 import { GenreOutputMapper } from '../../../core/genre/application/use-cases/common/genre-output';
+import { AuthModule } from '../../auth-module/auth.module';
 
 describe('GenresController Integration Tests', () => {
   let controller: GenresController;
@@ -33,7 +34,12 @@ describe('GenresController Integration Tests', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot(), DatabaseModule, GenresModule],
+      imports: [
+        ConfigModule.forRoot(),
+        DatabaseModule,
+        AuthModule,
+        GenresModule,
+      ],
     })
       .overrideProvider('UnitOfWork')
       .useFactory({
