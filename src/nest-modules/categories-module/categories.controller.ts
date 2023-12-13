@@ -26,8 +26,9 @@ import {
 import { CategoryOutput } from '../../core/category/application/use-cases/common/category-output';
 import { SearchCategoriesDto } from './dto/search-categories.dto';
 import { AuthGuard } from '../auth-module/auth.guard';
+import { CheckIsAdminGuard } from '../auth-module/check-is-admin.guard';
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, CheckIsAdminGuard)
 @Controller('categories')
 export class CategoriesController {
   @Inject(CreateCategoryUseCase)
