@@ -18,6 +18,9 @@ services:
     depends_on:
       - db
       - rabbitmq
+    environment:
+      - GOOGLE_CLOUD_STORAGE_BUCKET_NAME
+      - GOOGLE_CLOUD_CREDENTIALS
 
   db:
     image: mysql:8.0.30-debian

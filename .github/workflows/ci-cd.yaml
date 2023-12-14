@@ -1,0 +1,122 @@
+name: CI/CD
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+on:
+  push:
+    branches: ['main']
+    # Publish semver tags as releases.
+    tags: ['v*.*.*']
+  pull_request:
+    branches: ['main']
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+  FOLDER_NAME: ${{ github.event.repository.name }}-app
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Install the cosign tool except on PR
+      # https://github.com/sigstore/cosign-installer
+      - name: Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
+        with:
+          cosign-release: 'v2.1.1'
+
+      # Set up BuildKit Docker container builder to be able to build
+      # multi-platform images and export cache
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
+
+      # Login against a Docker registry except on PR
+      # https://github.com/docker/login-action
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and push Docker image with Buildx (don't push on PR)
+      # https://github.com/docker/build-push-action
+      - name: Build development
+        id: build-and-push
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        with:
+          context: .
+          push: false
+          tags: ${{ env.FOLDER_NAME }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          load: true
+          file: Dockerfile.prod
+          target: development
+
+      - name: up containers
+        env:
+          GOOGLE_CLOUD_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
+          GOOGLE_CLOUD_STORAGE_BUCKET_NAME: ${{ secrets.GOOGLE_CLOUD_STORAGE_BUCKET_NAME }}
+        run: docker compose -f docker-compose.ci.yaml up -d
+
+      - name: wait for mysql
+        run: docker compose -f docker-compose.ci.yaml exec -T db mysqladmin ping --silent --wait=30 -uroot -proot
+
+      - name: generate envs
+        run: |
+          docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.test.example ./envs/.env.test
+          docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.e2e.example ./envs/.env.e2e
+
+      - name: run unit and integration tests
+        run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
+
+      - name: run e2e tests
+        run: docker compose -f docker-compose.ci.yaml exec -T app npm run test:e2e -- --runInBand --detectOpenHandles --forceExit
+
+      - name: Bump version and push tag
+        id: tagging
+        if: github.event_name != 'pull_request'
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build prod version and push
+        id: build-final
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tagging.outputs.new_tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          file: Dockerfile.prod
+
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event_name != 'pull_request' }}
+
+    steps:
+      - name: show version
+        run: echo ${{ needs.ci.outputs.new_version }}
