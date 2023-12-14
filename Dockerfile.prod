@@ -11,7 +11,7 @@ RUN npm ci
 
 COPY --chown=node:node . .
 
-CMD [ ".docker/start.sh" ]
+CMD [ "tail", "-f", "/dev/null" ]
 
 FROM node:20.5.1-slim as builder
 
@@ -22,16 +22,13 @@ RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
 COPY --chown=node:node --from=development /home/node/app ./
-
 RUN npm run build
 
 ENV NODE_ENV production
 
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production
 
 FROM node:20.5.1-slim as production
-
-ENV NODE_ENV production
 
 USER node
 
@@ -45,4 +42,4 @@ COPY --chown=node:node --from=builder /home/node/app/package.json ./
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start:prod"]
+CMD [ "npm", "run", "start:prod" ]
