@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: on-failure
+    ports:
+      - 3000:3000
+    volumes:
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
+      - ./envs:/home/node/app/envs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - db
+      - rabbitmq
+
+  db:
+    image: mysql:8.0.30-debian
+    environment:
+      - MYSQL_DATABASE=micro_videos
+      - MYSQL_ROOT_PASSWORD=root
+    tmpfs:
+      - /var/lib/mysql
+    security_opt:
+      - seccomp:unconfined
+  
+  rabbitmq:
+    build: ./.docker/rabbitmq
+    ports:
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    tmpfs:
+      - /var/lib/rabbitmq
