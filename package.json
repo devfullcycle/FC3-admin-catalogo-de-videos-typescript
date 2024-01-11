@@ -13,7 +13,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "migrate:ts": "node -r ts-node/register/transpile-only ./src/migrate.ts",
+    "migrate:ts": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./src/migrate.ts",
     "migrate:js": "node ./dist/migrate.js",
     "test": "jest",
     "test:watch": "jest --watch",
